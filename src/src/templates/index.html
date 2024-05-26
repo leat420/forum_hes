@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'path_to_your_css_file.css' %}">
+</head>
+<body>
+    <h1>Bienvenue sur le blog</h1>
+    <div class="button-container">
+        <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
+        <button onclick="location.href='{% url 'question_reponses' %}'">Question réponses</button>
+    </div>
+</body>
+</html>

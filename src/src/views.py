@@ -1,7 +1,11 @@
-from datetime import datetime
+# src/views.py
 from django.shortcuts import render
 
 def index(request):
-    date=datetime.today()
+    return render(request, 'index.html')
 
-    return render(request, 'src/index.html', context={"prénom": "Arlinda", "date": date})
+def opinions(request):
+    return render(request, 'opinions.html')
+
+def question_reponses(request):
+    return render(request, 'question_reponses.html')
