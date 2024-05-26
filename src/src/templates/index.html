@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{% static 'path_to_your_css_file.css' %}">
 </head>
 <body>
-    <h1>Bienvenue sur le blog</h1>
+    <h1>Bienvenue sur le forum de la HES-SO Valais//Wallis</h1>
+    <img src="{% static 'images/img.png' %}" alt="Logo HES-SO">
     <div class="button-container">
         <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
         <button onclick="location.href='{% url 'question_reponses' %}'">Question réponses</button>
