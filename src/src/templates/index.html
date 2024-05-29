@@ -6,12 +6,31 @@
     <title>Page d'accueil</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'path_to_your_css_file.css' %}">
+    <style>
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenue sur le blog</h1>
-    <div class="button-container">
-        <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
-        <button onclick="location.href='{% url 'question_reponses' %}'">Question réponses</button>
-    </div>
+<h1>Bienvenue sur le blog</h1>
+<div class="button-container">
+    <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
+    <button onclick="location.href='{% url 'question_reponses' %}'">Question réponses</button>
+    <button onclick="location.href='{% url 'help_requests' %}'">Demandes d'aide</button>
+</div>
 </body>
 </html>

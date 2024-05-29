@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question réponses</title>
+    <title>Détail de la demande d'aide</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <style>
@@ -15,8 +15,22 @@
             border-radius: 4px;
             background-color: #f9f9f9;
         }
-        .container h2 {
+        .container h2, .container h3 {
             text-align: center;
+        }
+        .container a.button {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .container a.button:hover {
+            background-color: #45a049;
         }
         .container label {
             display: block;
@@ -41,7 +55,7 @@
             cursor: pointer;
         }
         .container button:hover {
-            background-color: #4CAF50;
+            background-color: #45a049;
         }
         .container ul {
             list-style-type: none;
@@ -55,31 +69,28 @@
 </head>
 <body>
 <div class="container">
-    <h2>Formulaire de commentaires</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <label for="name">Nom :</label>
-        <input type="text" name="name" id="name" placeholder="Entrez votre nom" required>
+    <a href="{% url 'help_requests' %}" class="button">Retour aux demandes d'aide</a>
+    <h2>{{ help_request.subject_name }}</h2>
+    <p><strong>Créé par:</strong> {{ help_request.creator_name }}</p>
+    <p><strong>Date:</strong> {{ help_request.created_at|date:"d M Y H:i" }}</p>
+    <p><strong>Question:</strong> {{ help_request.question }}</p>
 
-        <label for="email">Adresse e-mail :</label>
-        <input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail" required>
-
-        <label for="body">Message :</label>
-        <textarea name="body" id="body" placeholder="Entrez votre message" rows="4" required></textarea>
-        <button type="submit">Envoyer un commentaire</button>
-    </form>
-
-    <h2>Commentaires</h2>
+    <h3>Réponses</h3>
     <ul>
-        {% for comment in comments %}
+        {% for response in help_request.responses.all %}
         <li>
-            <strong>{{ comment.name }}</strong> ({{ comment.created_at|date:"d M Y H:i" }})<br>
-            {{ comment.body }}
+            <strong>{{ response.responder_name }}</strong> ({{ response.created_at|date:"d M Y H:i" }}):<br>
+            {{ response.answer }}
         </li>
         {% endfor %}
     </ul>
+
+    <h3>Ajouter une réponse</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Répondre</button>
+    </form>
 </div>
-<h1>Page Question réponses</h1>
-<p>Bienvenue sur la page des questions et réponses.</p>
 </body>
 </html>

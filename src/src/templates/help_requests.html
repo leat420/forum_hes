@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demandes d'aide</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+<div class="container">
+    <h2>Demandes d'aide</h2>
+    <a href="{% url 'new_help_request' %}">Créer une nouvelle demande d'aide</a>
+    <ul>
+        {% for request in requests %}
+        <li>
+            <a href="{% url 'help_request_detail' request.pk %}">{{ request.subject_name }}</a> par {{ request.creator_name }} ({{ request.created_at|date:"d M Y H:i" }})
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
