@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer le commentaire</title>
+</head>
+<body>
+<h1>Supprimer le commentaire</h1>
+<p>Êtes-vous sûr de vouloir supprimer ce commentaire ?</p>
+<p><strong>{{ comment.name }}</strong>: {{ comment.body }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Oui, supprimer</button>
+    <a href="{% url 'opinions' %}">Non, retourner</a>
+</form>
+</body>
+</html>

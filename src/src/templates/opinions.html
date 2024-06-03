@@ -1,13 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opinions</title>
+    <title>Question réponses</title>
     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .container h2 {
+            text-align: center;
+        }
+        .container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .container input, .container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .container button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #4CAF50;
+        }
+        .container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .container li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+        }
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-    <h1>Page Opinions</h1>
-    <p>Bienvenue sur la page des opinions.</p>
+<h1>Page de commentaires</h1>
+<p>Bienvenue sur la page des commentaires</p>
+<div class="container">
+    <h2>Formulaire de commentaires</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Envoyer un commentaire</button>
+    </form>
+
+    <h2>Commentaires</h2>
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <div>
+                <strong>{{ comment.name }}</strong> ({{ comment.created_at|date:"d M Y H:i" }})<br>
+                {{ comment.body }}
+            </div>
+            <form method="POST" action="{% url 'delete_comment' comment.id %}">
+                {% csrf_token %}
+                <button type="submit" class="delete-button">Supprimer</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 </body>
 </html>

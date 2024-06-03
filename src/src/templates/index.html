@@ -14,7 +14,7 @@
         }
         .button-container button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #4c61af;
             color: white;
             border: none;
             border-radius: 4px;
@@ -26,10 +26,20 @@
     </style>
 </head>
 <body>
-<h1>Bienvenue sur le blog</h1>
+<h1>Bienvenue sur le Forum Étudiant de la HES-SO Valais !</h1>
+<p>Nous sommes ravis de vous accueillir sur notre plateforme dédiée aux étudiants de la HES-SO Valais.</p>
+    <p>Ce forum est un espace de partage, d'entraide et d'expression ouvert à tous les membres de notre communauté académique.</p>
+
+    <p>Posez vos questions sur les cours</p>
+    <p>Vous avez des questions sur un cours ? Vous avez besoin de clarifications sur un sujet particulier ? Notre forum est l'endroit idéal pour poser vos questions. D'autres étudiants et peut-être même des enseignants pourront vous aider à trouver les réponses dont vous avez besoin.</p>
+
+    <p>Opinions</p>
+    <p>Votre bien-être est important pour nous. Utilisez notre plateforme pour parler de votre état mental, partager vos préoccupations et trouver du soutien auprès de vos pairs. Vous n'êtes pas seul, et ensemble, nous pouvons créer un environnement plus solidaire et compréhensif.</p>
+    <p>Nous espérons que vous trouverez ce forum utile et inspirant. Merci de faire partie de la communauté HES-SO Valais !</p>
+    <p>N'hésitez pas à ajuster le texte en fonction de vos besoins spécifiques.</p>
+
 <div class="button-container">
     <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
-    <button onclick="location.href='{% url 'question_reponses' %}'">Question réponses</button>
     <button onclick="location.href='{% url 'help_requests' %}'">Demandes d'aide</button>
 </div>
 </body>
