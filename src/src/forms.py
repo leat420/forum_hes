@@ -13,9 +13,9 @@ class CommentForm(forms.ModelForm):
 class HelpRequestForm(forms.ModelForm):
     class Meta:
         model = HelpRequest
-        fields = ['subject_name', 'subject_field', 'creator_name', 'question']
+        fields = ['Branche', 'Thème', 'Prénom', 'Question']
         widgets = {
-            'subject_field': forms.Select(choices=[('Math', 'Math'), ('Science', 'Science'), ('History', 'History')]),
+            'Branche': forms.Select(choices=[('Biologie', 'Biologie'), ('Chimie', 'Chimie'), ('Informatique', 'Informatique'), ('Mathématiques', 'Mathématiques')]),
         }
 
 class ResponseForm(forms.ModelForm):

@@ -13,4 +13,5 @@ urlpatterns = [
     path('help_requests/', views.help_requests, name='help_requests'),
     path('help_requests/new/', views.new_help_request, name='new_help_request'),
     path('help_requests/<int:pk>/', views.help_request_detail, name='help_request_detail'),
+    path('help_requests/<int:pk>/delete/', views.delete_help_request, name='delete_help_request'),
 ]

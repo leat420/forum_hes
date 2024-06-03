@@ -75,7 +75,24 @@
         {{ form.as_p }}
         <button type="submit">Envoyer un commentaire</button>
     </form>
+    <a href="{% url 'index' %}">
+        <button>Retour à l'accueil</button>
+    </a>
 
+    {% if form.errors %}
+    <div class="errors">
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
     <h2>Commentaires</h2>
     <ul>
         {% for comment in comments %}

@@ -48,7 +48,8 @@ def delete_comment(request, comment_id):
 
 def help_requests(request):
     requests = HelpRequest.objects.all().order_by('-created_at')
-    return render(request, 'help_requests.html', {'requests': requests})
+    form= ResponseForm() #formulaire de réponse
+    return render(request, 'help_requests.html', {'requests': requests, 'form': form})
 
 def new_help_request(request):
     if request.method == 'POST':
@@ -72,3 +73,16 @@ def help_request_detail(request, pk):
     else:
         form = ResponseForm()
     return render(request, 'help_request_detail.html', {'help_request': help_request, 'form': form})
+def delete_help_request(request, pk):
+    help_request = get_object_or_404(HelpRequest, pk=pk)
+    if request.method == 'POST':
+        help_request.delete()
+        return redirect('help_requests')
+    return render(request, 'delete_help_request.html', {'help_request': help_request})
+
+def delete_help_request(request, pk):
+    help_request = get_object_or_404(HelpRequest, pk=pk)
+    if request.method == 'POST':
+        help_request.delete()
+        return redirect('help_requests')
+    return render(request, 'delete_help_request.html', {'help_request': help_request})

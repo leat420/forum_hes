@@ -9,12 +9,16 @@
 </head>
 <body>
 <div class="container">
-    <h2>Créer une nouvelle demande d'aide</h2>
+    <h2>Ajouter une nouvelle demande d'aide</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Soumettre</button>
     </form>
+    <a href="{% url 'help_requests' %}">
+        <button>Retour aux demandes d'aide</button>
+    </a>
+
 </div>
 </body>
 </html>
