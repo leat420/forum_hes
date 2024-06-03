@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demandes d'aide</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+<div class="container">
+    <h2>Demandes d'aide</h2>
+    <a href="{% url 'new_help_request' %}">Créer une nouvelle demande d'aide</a>
+    <ul>
+        {% for request in requests %}
+        <li>
+            <h3>{{ request.Thème }}</h3>
+            <p><strong>Créé par:</strong> {{ request.Prénom }}</p>
+            <p><strong>Date:</strong> {{ request.created_at|date:"d M Y H:i" }}</p>
+            <p><strong>Branche:</strong> {{ request.Branche }}</p>
+            <p><strong>Question:</strong> {{ request.Question }}</p>
+
+            <h4>Réponses</h4>
+            <ul>
+                {% for response in request.responses.all %}
+                <li>
+                    <strong>{{ response.responder_name }}</strong> ({{ response.created_at|date:"d M Y H:i" }}):<br>
+                    {{ response.answer }}
+                </li>
+                {% endfor %}
+            </ul>
+
+            <h4>Ajouter une réponse</h4>
+            <form method="POST" action="{% url 'help_request_detail' request.pk %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Répondre</button>
+            </form>
+
+            <form method="POST" action="{% url 'delete_help_request' request.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Supprimer</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index' %}">
+        <button>Retour à l'accueil</button>
+    </a>
+</div>
+</body>
+</html>
