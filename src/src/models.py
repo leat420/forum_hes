@@ -11,21 +11,23 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.name} - {self.body[:20]}"
 
+
 class Question(models.Model):
     branche = models.CharField(max_length=100)
-    thème = models.CharField(max_length=200)
-    prénom = models.CharField(max_length=100)
+    theme = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
     question_text = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.question_text
+        return self.question_text[:50]
 
-class Reponse(models.Model):
+
+class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    prénom = models.CharField(max_length=100)
-    réponse_text = models.TextField()
+    name = models.CharField(max_length=100)
+    answer_text = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.réponse_text
+        return self.answer_text

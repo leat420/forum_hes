@@ -1,5 +1,4 @@
-from django import forms
-from .models import Comment, Question, Reponse
+from .models import Comment, Question, Answer
 from django import forms
 
 
@@ -12,9 +11,10 @@ class CommentForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['branche', 'thème', 'prénom', 'question_text']
+        fields = ['branche', 'theme', 'name', 'question_text']
 
-class Reponse(forms.ModelForm):
+
+class AnswerForm(forms.ModelForm):
     class Meta:
-        model = Reponse
-        fields = ['prénom', 'réponse_text']
+        model = Answer
+        fields = ['name', 'answer_text']
