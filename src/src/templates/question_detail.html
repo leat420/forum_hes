@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de la question</title>
+</head>
+<body>
+<div class="container">
+    <h1>{{ question.question_text }}</h1>
+    <p>Posée par: {{ question.first_name }} le {{ question.created_at|date:"d M Y H:i" }}</p>
+    <p>Thème: {{ question.theme }}</p>
+    <p>Branche: {{ question.branch }}</p>
+
+    <h2>Réponses</h2>
+    {% if question.answers.all %}
+        {% for answer in question.answers.all %}
+            <div class="answer">
+                <p>{{ answer.answer_text }}</p>
+                <p>— Répondu par {{ answer.first_name }} le {{ answer.created_at|date:"d M Y H:i" }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucune réponse pour l'instant.</p>
+    {% endif %}
+
+    <h2>Ajouter une réponse</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Poster la réponse</button>
+    </form>
+    <div class="button-container">
+        <a href="{% url 'index' %}" class="back-button" style="padding: 10px; text-align: center; display: block;">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer une nouvelle question</title>
+</head>
+<body>
+<div class="container">
+    <h1>Poser une nouvelle question</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Envoyer la question</button>
+        <a href="{% url 'index' %}" class="back-button" style="padding: 10px; text-align: center; display: block;">Retour à l'accueil</a>
+    <h2>Questions Existantes</h2>
+    <div>
+        {% for question in questions %}
+            <div>
+                <p><strong>Question :</strong> {{ question.question_text }}</p>
+                <p><strong>Par :</strong> {{ question.first_name }}, <strong>Le :</strong> {{ question.created_at|date:"d M Y H:i" }}</p>
+                <p><strong>Thème :</strong> {{ question.theme }}</p>
+                <p><strong>Branche :</strong> {{ question.branch }}</p>
+                <!-- Ajouter un lien pour les détails de la question ou pour y répondre -->
+                <a href="{% url 'question_detail' question.id %}">Voir les réponses</a>
+            </div>
+        {% empty %}
+            <p>Aucune question n'a été posée pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

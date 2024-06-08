@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import CommentForm
-from .models import Comment
+from .forms import CommentForm, QuestionForm
+from .models import Comment, Question
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import HelpRequestForm, ResponseForm
-from .models import HelpRequest
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Comment  # Assuming you have a Comment model
@@ -46,43 +44,34 @@ def delete_comment(request, comment_id):
         return redirect('opinions')
     return render(request, 'delete_comment.html', {'comment': comment})
 
-def help_requests(request):
-    requests = HelpRequest.objects.all().order_by('-created_at')
-    form = ResponseForm() #formulaire de réponse
-    return render(request, 'help_requests.html', {'requests': requests, 'form': form})
-
-def new_help_request(request):
-    if request.method == 'POST':
-        form = HelpRequestForm(request.POST)
+def create_question(request):
+    questions = Question.objects.all()  # Récupérer toutes les questions
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('help_requests')
+            return redirect('create_question')
     else:
-        form = HelpRequestForm()
-    return render(request, 'new_help_request.html', {'form': form})
+        form = QuestionForm()
+    context = {
+        'form': form,
+        'questions': questions  # Ajouter les questions au contexte
+    }
+    return render(request, 'create_question.html', context)
+class AnswerForm:
+    pass
 
-def help_request_detail(request, pk):
-    help_request = get_object_or_404(HelpRequest, pk=pk)
-    if request.method == 'POST':
-        form = ResponseForm(request.POST)
+
+def question_detail(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
         if form.is_valid():
-            response = form.save(commit=False)
-            response.help_request = help_request
-            response.save()
-            return redirect('help_request_detail', pk=help_request.pk)
+            answer = form.save(commit=False)
+            answer.question = question
+            answer.save()
+            return redirect('question_detail', question_id=question_id)
     else:
-        form = ResponseForm()
-    return render(request, 'help_request_detail.html', {'help_request': help_request, 'form': form})
-def delete_help_request(request, pk):
-    help_request = get_object_or_404(HelpRequest, pk=pk)
-    if request.method == 'POST':
-        help_request.delete()
-        return redirect('help_requests')
-    return render(request, 'delete_help_request.html', {'help_request': help_request})
-
-def delete_help_request(request, pk):
-    help_request = get_object_or_404(HelpRequest, pk=pk)
-    if request.method == 'POST':
-        help_request.delete()
-        return redirect('help_requests')
-    return render(request, 'delete_help_request.html', {'help_request': help_request})
+        form = AnswerForm()
+    answers = question.answers.all()
+    return render(request, 'question_detail.html', {'question': question, 'answers': answers, 'form': form})
