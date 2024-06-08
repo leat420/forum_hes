@@ -3,26 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question réponses</title>
+    <title>Opinions</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Centrer le texte */
+            background-color: #fff; /* Enlever la démarcation de couleur */
+        }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 1200px;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: #f9f9f9;
+            box-sizing: border-box;
+            text-align: center; /* Centrer le texte */
         }
-        .container h2 {
-            text-align: center;
+        .logo {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
         }
-        .container label {
+        .content {
+            display: flex;
+            justify-content: space-between; /* Espace entre les deux sections */
+            gap: 20px;
+            align-items: flex-start; /* Aligner les sections en haut */
+        }
+        .comment-form, .comments-list-container {
+            flex: 1;
+        }
+        .comment-form {
+            text-align: left;
+        }
+        .comment-form label {
             display: block;
             margin: 10px 0 5px;
         }
-        .container input, .container textarea {
+        .comment-form input, .comment-form textarea {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
@@ -30,85 +54,107 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        .container button {
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .button-container button, .button-container a {
             display: block;
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #4c61af; /* Bleu pour les boutons */
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px; /* Même taille de police */
+            font-family: Arial, sans-serif; /* Même police */
+            text-decoration: none; /* Enlever le soulignement */
+            text-align: center;
         }
-        .container button:hover {
-            background-color: #4CAF50;
+        .button-container button:hover, .button-container a:hover {
+            background-color: #3b4d8e;
         }
-        .container ul {
+        .comments-list {
             list-style-type: none;
             padding: 0;
+            text-align: left;
+            max-height: 400px; /* Limiter la hauteur de la liste de commentaires */
+            overflow-y: auto; /* Activer le défilement vertical */
         }
-        .container li {
+        .comments-list li {
             padding: 10px;
             border-bottom: 1px solid #ddd;
             display: flex;
-            justify-content: center;
+            justify-content: space-between; /* Espace entre le texte et le bouton */
+            align-items: center;
         }
-        .delete-button {
-            background-color: red;
+        .comments-list button {
+            background-color: #888;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            padding: 5px 10px;
         }
-        .delete-button:hover {
-            background-color: darkred;
+        .comments-list button:hover {
+            background-color: #666;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        strong {
+            color: #333;
         }
     </style>
 </head>
 <body>
-<h1>Page de commentaires</h1>
-<p>Bienvenue sur la page des commentaires</p>
 <div class="container">
-    <h2>Formulaire de commentaires</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Envoyer un commentaire</button>
-    </form>
-    <a href="{% url 'index' %}">
-        <button>Retour à l'accueil</button>
-    </a>
+    <img src="https://www.hevs.ch/media/image/3/large_2_1/hevslogo2019.png" alt="Logo de la HES-SO Valais" class="logo">
+    <h1>Bienvenue sur la page de partage d'opinions</h1>
 
-    {% if form.errors %}
-    <div class="errors">
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-    <h2>Commentaires</h2>
-    <ul>
-        {% for comment in comments %}
-        <li>
-            <div>
-                <strong>{{ comment.name }}</strong> ({{ comment.created_at|date:"d M Y H:i" }})<br>
-                {{ comment.body }}
-            </div>
-            <form method="POST" action="{% url 'delete_comment' comment.id %}">
+    <div class="content">
+        <div class="comment-form">
+            <h2>Formulaire de commentaires</h2>
+            <form method="POST">
                 {% csrf_token %}
-                <button type="submit" class="delete-button">Supprimer</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+                <label for="name">Nom :</label>
+                <input type="text" name="name" id="name" placeholder="Entrez votre nom" required>
 
+                <label for="email">Adresse e-mail :</label>
+                <input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail" required>
+
+                <label for="body">Message :</label>
+                <textarea name="body" id="body" placeholder="Entrez votre message" rows="4" required></textarea>
+                <div class="button-container">
+                    <button type="submit">Publier le commentaire</button>
+                    <a href="{% url 'index' %}" class="back-button">Retour à l'accueil</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="comments-list-container">
+            <h2>Commentaires</h2>
+            <ul class="comments-list">
+                {% for comment in comments %}
+                <li>
+                    <div>
+                        <strong>{{ comment.name }}</strong> ({{ comment.created_at|date:"d M Y H:i" }})<br>
+                        {{ comment.body }}
+                    </div>
+                    <form method="POST" action="{% url 'delete_comment' comment.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>

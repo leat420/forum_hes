@@ -5,11 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'path_to_your_css_file.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Centrer le texte */
+            background-color: #fff;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .logo {
+            max-width: 350px; /* Limite la taille de l'image */
+            height: auto;
+            margin-bottom: 0px;
+        }
         .button-container {
             margin-top: 20px;
             display: flex;
+            justify-content: center; /* Centrer les boutons */
             gap: 10px;
         }
         .button-container button {
@@ -19,28 +41,47 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
         }
         .button-container button:hover {
             background-color: #45a049;
         }
+        .section {
+            margin-bottom: 40px; /* Ajouter de l'espace entre les sections */
+        }
     </style>
 </head>
 <body>
-<h1>Bienvenue sur le Forum Étudiant de la HES-SO Valais !</h1>
-<p>Nous sommes ravis de vous accueillir sur notre plateforme dédiée aux étudiants de la HES-SO Valais.</p>
-    <p>Ce forum est un espace de partage, d'entraide et d'expression ouvert à tous les membres de notre communauté académique.</p>
+<div class="container">
+    <img src="https://www.hevs.ch/media/image/3/large_2_1/hevslogo2019.png" alt="Logo de la HES-SO Valais" class="logo">
+    <h1>Bienvenue sur le Forum Étudiant de la HES-SO Valais !</h1>
+    <h2>Nous sommes ravis de vous accueillir sur notre plateforme dédiée aux étudiants de la HES-SO Valais.</h2>
+    <div class="section">
+        <p>Ce forum est un espace de partage, d'entraide et d'expression ouvert à tous les membres de notre communauté académique.</p>
+    </div>
 
-    <p>Posez vos questions sur les cours</p>
-    <p>Vous avez des questions sur un cours ? Vous avez besoin de clarifications sur un sujet particulier ? Notre forum est l'endroit idéal pour poser vos questions. D'autres étudiants et peut-être même des enseignants pourront vous aider à trouver les réponses dont vous avez besoin.</p>
+    <div class="section">
+        <strong>Demandes d'aide</strong>
+        <p>Vous avez des questions sur un cours ? Vous avez besoin de clarifications sur un sujet particulier ? Notre forum est l'endroit idéal pour poser vos questions. D'autres étudiants et peut-être même des enseignants pourront vous aider à trouver les réponses dont vous avez besoin.</p>
+         <div class="button-container">
+            <button onclick="location.href='{% url 'help_requests' %}'">Demandes d'aide</button>
+        </div>
+    </div>
 
-    <p>Opinions</p>
-    <p>Votre bien-être est important pour nous. Utilisez notre plateforme pour parler de votre état mental, partager vos préoccupations et trouver du soutien auprès de vos pairs. Vous n'êtes pas seul, et ensemble, nous pouvons créer un environnement plus solidaire et compréhensif.</p>
-    <p>Nous espérons que vous trouverez ce forum utile et inspirant. Merci de faire partie de la communauté HES-SO Valais !</p>
-    <p>N'hésitez pas à ajuster le texte en fonction de vos besoins spécifiques.</p>
 
-<div class="button-container">
-    <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
-    <button onclick="location.href='{% url 'help_requests' %}'">Demandes d'aide</button>
+
+    <div class="section">
+        <strong>Opinions</strong>
+        <p>Votre bien-être est important pour nous. Utilisez notre plateforme pour parler de votre état mental, partager vos préoccupations et trouver du soutien auprès de vos pairs. Vous n'êtes pas seul, et ensemble, nous pouvons créer un environnement plus solidaire et compréhensif.</p>
+        <p>Nous espérons que vous trouverez ce forum utile et inspirant. Merci de faire partie de la communauté HES-SO Valais !</p>
+        <p>N'hésitez pas à ajuster le texte en fonction de vos besoins spécifiques.</p>
+        <div class="button-container">
+            <button onclick="location.href='{% url 'opinions' %}'">Opinions</button>
+        </div>
+    </div>
+
+
 </div>
 </body>
 </html>

@@ -48,7 +48,7 @@ def delete_comment(request, comment_id):
 
 def help_requests(request):
     requests = HelpRequest.objects.all().order_by('-created_at')
-    form= ResponseForm() #formulaire de réponse
+    form = ResponseForm() #formulaire de réponse
     return render(request, 'help_requests.html', {'requests': requests, 'form': form})
 
 def new_help_request(request):
