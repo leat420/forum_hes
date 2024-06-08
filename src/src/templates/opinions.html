@@ -14,15 +14,16 @@
             min-height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            text-align: center; /* Centrer le texte */
-            background-color: #fff; /* Enlever la démarcation de couleur */
+            background-color: #fff;
+        }
+        .container, .content, .button-container, .comments-list li {
+            text-align: center;
         }
         .container {
             width: 100%;
             max-width: 1200px;
             padding: 20px;
             box-sizing: border-box;
-            text-align: center; /* Centrer le texte */
         }
         .logo {
             width: auto;
@@ -32,83 +33,43 @@
         }
         .content {
             display: flex;
-            justify-content: space-between; /* Espace entre les deux sections */
+            justify-content: space-between;
             gap: 20px;
-            align-items: flex-start; /* Aligner les sections en haut */
+            align-items: flex-start;
         }
         .comment-form, .comments-list-container {
             flex: 1;
-        }
-        .comment-form {
             text-align: left;
         }
-        .comment-form label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        .comment-form input, .comment-form textarea {
+        input, textarea, button, a {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
         }
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .button-container button, .button-container a {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #4c61af; /* Bleu pour les boutons */
+        button, a {
+            background-color: #4c61af;
             color: white;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
-            font-size: 16px; /* Même taille de police */
-            font-family: Arial, sans-serif; /* Même police */
-            text-decoration: none; /* Enlever le soulignement */
-            text-align: center;
+            text-decoration: none;
         }
-        .button-container button:hover, .button-container a:hover {
+        button:hover, a:hover {
             background-color: #3b4d8e;
         }
         .comments-list {
             list-style-type: none;
             padding: 0;
-            text-align: left;
-            max-height: 400px; /* Limiter la hauteur de la liste de commentaires */
-            overflow-y: auto; /* Activer le défilement vertical */
-        }
-        .comments-list li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between; /* Espace entre le texte et le bouton */
-            align-items: center;
+            max-height: 400px;
+            overflow-y: auto;
         }
         .comments-list button {
             background-color: #888;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            padding: 5px 10px;
         }
         .comments-list button:hover {
             background-color: #666;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        p {
-            color: #666;
-        }
-        strong {
-            color: #333;
         }
     </style>
 </head>
@@ -123,16 +84,15 @@
             <form method="POST">
                 {% csrf_token %}
                 <label for="name">Nom :</label>
-                <input type="text" name="name" id="name" placeholder="Entrez votre nom" required>
-
+                <input type="text" id="name" name="name" placeholder="Entrez votre nom" required>
                 <label for="email">Adresse e-mail :</label>
-                <input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail" required>
-
+                <input type="email" id="email" name="email" placeholder="Entrez votre adresse e-mail" required>
                 <label for="body">Message :</label>
-                <textarea name="body" id="body" placeholder="Entrez votre message" rows="4" required></textarea>
+                <textarea id="body" name="body" placeholder="Entrez votre message" rows="4" required></textarea>
+
                 <div class="button-container">
-                    <button type="submit">Publier le commentaire</button>
-                    <a href="{% url 'index' %}" class="back-button">Retour à l'accueil</a>
+                    <button type="submit" style="font-size: medium">Publier</button>
+                    <a href="{% url 'index' %}" class="back-button" style="padding: 10px; text-align: center; display: block;">Retour à l'accueil</a>
                 </div>
             </form>
         </div>
