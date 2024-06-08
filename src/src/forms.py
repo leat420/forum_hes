@@ -1,7 +1,5 @@
+from .models import Comment, Question, Answer
 from django import forms
-from .models import Comment
-from django import forms
-from .models import HelpRequest, Response
 
 
 class CommentForm(forms.ModelForm):
@@ -10,15 +8,13 @@ class CommentForm(forms.ModelForm):
         fields = ['name', 'email', 'body']
 
 
-class HelpRequestForm(forms.ModelForm):
+class QuestionForm(forms.ModelForm):
     class Meta:
-        model = HelpRequest
-        fields = ['Branche', 'Thème', 'Prénom', 'Question']
-        widgets = {
-            'Branche': forms.Select(choices=[('Biologie', 'Biologie'), ('Chimie', 'Chimie'), ('Informatique', 'Informatique'), ('Mathématiques', 'Mathématiques')]),
-        }
+        model = Question
+        fields = ['branche', 'theme', 'name', 'question_text']
 
-class ResponseForm(forms.ModelForm):
+
+class AnswerForm(forms.ModelForm):
     class Meta:
-        model = Response
-        fields = ['responder_name', 'answer']
+        model = Answer
+        fields = ['name', 'answer_text']

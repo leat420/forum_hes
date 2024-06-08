@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions-réponses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .logo {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .form-section, .questions-section {
+            flex: 1;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form label, form input, form select, form textarea, form button {
+            margin-bottom: 10px;
+        }
+        form input[type="text"], form select, form textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        form textarea {
+            height: 150px;
+        }
+        input, textarea, button, a {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button, a {
+            background-color: #4c61af;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        button:hover, a:hover {
+            background-color: #3b4d8e;
+        }
+        .delete-button {
+            background-color: #888888;
+            color: white;
+        }
+        .delete-button:hover {
+            background-color: #666666;
+        }
+        .questions-section div {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .questions-section div:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://www.hevs.ch/media/image/3/large_2_1/hevslogo2019.png" alt="Logo de la HES-SO Valais" class="logo">
+        <h1>Bienvenue sur la page des questions/réponses</h1>
+    </div>
+    <div class="container">
+        <div class="form-section">
+            <h2>Poser une question</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="id_branch">Branche :</label>
+                <select id="id_branch" name="branche">
+                    <option value="Biologie">Biologie</option>
+                    <option value="Chimie">Chimie</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Mathématiques">Mathématiques</option>
+                </select>
+                <label for="theme">Thème :</label>
+                <input type="text" id="theme" name="theme">
+                <label for="name">Prénom :</label>
+                <input type="text" id="name" name="name">
+                <label for="question_text">Question :</label>
+                <textarea id="question_text" name="question_text"></textarea>
+
+                <div class="button-container">
+                    <button type="submit" style="font-size: medium">Soumettre</button>
+                    <a href="{% url 'index' %}" class="back-button" style="padding: 10px; text-align: center; display: block;">Retour à l'accueil</a>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="questions-section">
+            <h2>Questions existantes</h2>
+            <ul class="questions-list">
+                {% for question in questions %}
+                <li>
+                    <div>
+                        <p><strong>Question :</strong> {{ question.question_text }}</p>
+                        <p><strong>Par :</strong> {{ question.name }}, <strong>Le :</strong> {{ question.created_at|date:"d M Y H:i" }}</p>
+                        <p><strong>Thème :</strong> {{ question.theme }}</p>
+                        <p><strong>Branche :</strong> {{ question.branche }}</p>
+                        <a href="{% url 'question_detail' question.id %}" class="button" style="padding: 10px; text-align: center; display: block;">Voir les réponses</a>
+                    </div>
+                    <form method="POST" action="{% url 'delete_question' question.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" style="font-size: medium" >Supprimer</button>
+                    </form>
+                </li>
+                {% empty %}
+                    <p>Aucune question n'a été posée pour le moment.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
