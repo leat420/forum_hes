@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-CH'
 
-TIME_ZONE = 'UTC+2'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -122,3 +122,6 @@ APPEND_SLASH = True
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+DEBUG = True
