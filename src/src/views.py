@@ -29,15 +29,6 @@ def opinions(request):
     return render(request, 'opinions.html', context)
 
 
-def display_comments(request):
-    # Fetch all comments from the database
-    comments = Comment.objects.all()
-
-    # Render the HTML template and pass in the comments
-    context = {'comments': comments}
-    return render(request, 'your_template.html', context)
-
-
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if request.method == "POST":
@@ -109,7 +100,3 @@ def delete_answer(request, answer_id):
     if request.method == "POST":
         answer.delete()
     return redirect('question_detail', question_id=question_id)
-
-
-
-

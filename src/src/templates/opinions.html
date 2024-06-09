@@ -17,6 +17,9 @@
         .container, .content, .button-container, .comments-list li {
             text-align: center;
         }
+        h2 {
+            color: #4c61af;
+        }
         .container {
             width: 100%;
             max-width: 1200px;
@@ -39,7 +42,7 @@
             flex: 1;
             text-align: left;
         }
-        input, textarea, button {
+        input, textarea, button, a {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -47,14 +50,15 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        button {
+        button, a {
             background-color: #4c61af;
             color: white;
             border: none;
             cursor: pointer;
+            text-decoration: none;
             
         }
-        button:hover:hover {
+        button:hover, a:hover {
             background-color: #3b4d8e;
         }
         .comments-list {
