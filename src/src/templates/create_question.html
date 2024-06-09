@@ -23,6 +23,9 @@
             justify-content: space-between;
             margin-top: 20px;
         }
+        h2 {
+            color: #4c61af;
+        }
         .logo {
             width: auto;
             max-width: 100%;
@@ -125,7 +128,7 @@
                 <li>
                     <div>
                         <p><strong>Question :</strong> {{ question.question_text }}</p>
-                        <p><strong>Par :</strong> {{ question.name }}, <strong>Le :</strong> {{ question.created_at|date:"d M Y H:i" }}</p>
+                        <p><strong>Par :</strong> {{ question.name }}, <strong>le :</strong> {{ question.created_at|date:"d M Y H:i" }}</p>
                         <p><strong>Thème :</strong> {{ question.theme }}</p>
                         <p><strong>Branche :</strong> {{ question.branche }}</p>
                         <a href="{% url 'question_detail' question.id %}" class="button" style="padding: 10px; text-align: center; display: block;">Voir les réponses</a>
